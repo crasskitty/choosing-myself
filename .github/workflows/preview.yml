@@ -1,0 +1,33 @@
+name: Preview
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preview matches the bundled lines
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          shared = json.loads(Path("Shared/HealingLines.json").read_text())
+          docs = json.loads(Path("docs/lines.json").read_text())
+          if shared != docs:
+              raise SystemExit("docs/lines.json is out of date. Copy Shared/HealingLines.json.")
+          lines = [line.strip() for line in docs["lines"] if line.strip()]
+          if len(lines) != 60 or len({line.lower() for line in lines}) != 60:
+              raise SystemExit(f"expected 60 unique lines, found {len(lines)}")
+          html = Path("docs/index.html").read_text()
+          if "preview.js" not in html or "preview.css" not in html:
+              raise SystemExit("docs/index.html is missing the preview assets")
+          for name in ("docs/preview.js", "docs/preview.css", "docs/index.html"):
+              if Path(name).stat().st_size < 20:
+                  raise SystemExit(f"{name} is empty")
+          print("preview ok")
+          PY

@@ -6,6 +6,14 @@ There is no account, no backend, and no AI. The day count, the letters, and the 
 
 Requires iOS 17 or later. Open the project in current Xcode on a Mac.
 
+## Try it in a browser
+
+The iPhone app is what you ship. `docs/` is a browser preview of the same screens, the same day count, and the same lines, so you can click through it before Xcode.
+
+[Open the preview](https://crasskitty.github.io/choosing-myself/)
+
+What you type stays in that browser. Nothing is sent. The preview cannot charge you, use Face ID, schedule a notification, or install the widget. On the paywall, "Preview the unlocked room" only changes that browser. `docs/lines.json` is a copy of `Shared/HealingLines.json`. When you edit the lines, copy that file into `docs/` again.
+
 ## What you get
 
 - Onboarding in three pages. The line "You chose yourself.", the date no contact started, an optional nickname ("him", "the ex"), and one mood: Rain, Night Drive, or Ocean.
